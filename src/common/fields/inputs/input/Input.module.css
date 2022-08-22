@@ -1,4 +1,16 @@
-input {
+.input_container {
+  position: relative;
+}
+.input_container > .input {
+  background-color: #ededed;
+}
+.password_toggle_container {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+.input {
   background: rgba(237, 237, 237, 0.7);
   border-radius: 5px;
   border: none;

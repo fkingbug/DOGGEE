@@ -6,6 +6,9 @@
   border: none;
   color: #ffffff;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: 300px;
+  font-style: normal;
 }
 .button:hover {
   background: #f5c678;

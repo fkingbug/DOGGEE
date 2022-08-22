@@ -1,7 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Input } from '../../common/fields'
-import { Button } from '../../common/buttons'
+import { Input, Passwordinput } from '@common/fields'
+import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
 
@@ -31,6 +32,7 @@ interface FormErrors {
 }
 
 export const LoginPage = () => {
+  const navigate = useNavigate()
   const [formValues, setFormValues] = React.useState({ username: '', password: '' })
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
     username: null,
@@ -47,6 +49,7 @@ export const LoginPage = () => {
               // helperText={formErrors.username}
               value={formValues.username}
               placeholder='username'
+              type='text'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const username = event.target.value
                 setFormValues({ ...formValues, username })
@@ -60,10 +63,10 @@ export const LoginPage = () => {
             />
           </div>
           <div className={styles.input_container}>
-            <Input
+            <Passwordinput
               isError={!!formErrors.password}
               value={formValues.password}
-              placeholder='passwrod'
+              placeholder='password'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const password = event.target.value
                 setFormValues({ ...formValues, password })
@@ -80,7 +83,9 @@ export const LoginPage = () => {
             <Button>Sign in</Button>
           </div>
         </div>
-        <div className={styles.sing_up_container}>Create new account</div>
+        <div className={styles.sing_up_container} onClick={() => navigate('/registration')}>
+          Create new account
+        </div>
       </div>
     </div>
   )
