@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Input, Passwordinput } from '@common/fields'
+import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
@@ -33,7 +33,11 @@ interface FormErrors {
 
 export const LoginPage = () => {
   const navigate = useNavigate()
-  const [formValues, setFormValues] = React.useState({ username: '', password: '' })
+  const [formValues, setFormValues] = React.useState({
+    username: '',
+    password: '',
+    notMyComputer: false,
+  })
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
     username: null,
     password: null,
@@ -48,7 +52,7 @@ export const LoginPage = () => {
               isError={!!formErrors.username}
               // helperText={formErrors.username}
               value={formValues.username}
-              placeholder='username'
+              label='username'
               type='text'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const username = event.target.value
@@ -66,7 +70,7 @@ export const LoginPage = () => {
             <Passwordinput
               isError={!!formErrors.password}
               value={formValues.password}
-              placeholder='password'
+              label='password'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const password = event.target.value
                 setFormValues({ ...formValues, password })
@@ -77,6 +81,16 @@ export const LoginPage = () => {
                 isError: !!formErrors.password,
                 helperText: formErrors.password,
               })}
+            />
+          </div>
+          <div className={styles.input_container}>
+            <CheckBox
+              label='This is not my device'
+              checked={formValues.notMyComputer}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const notMyComputer = event.target.checked
+                setFormValues({ ...formValues, notMyComputer })
+              }}
             />
           </div>
           <div>

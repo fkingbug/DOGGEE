@@ -1,17 +1,34 @@
 import React from 'react'
 
-import styles from './Input.module.css'
+import styles from '../input.module.css'
 
-interface InputProps extends React.HTMLProps<HTMLInputElement> {
-  isError?: boolean
-  helperText?: string
-}
+import { InputProps } from '../input'
 
-export const Input: React.FC<InputProps> = ({ isError = false, helperText, ...props }) => {
+export const Input: React.FC<InputProps> = ({ isError = false, helperText, label, ...props }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [isFocus, setIsFocus] = React.useState<boolean>(!!props.value ?? false)
   return (
-    <div className={styles.input_container}>
-      <input className={`${styles.input}  ${isError ? styles.error : ''}`} {...props} />
+    <>
+      <div
+        className={`${styles.input_container}  ${isError ? styles.error : ''} ${
+          isFocus ? styles.focused : ''
+        }`}
+        onClick={() => {
+          inputRef.current?.focus()
+          setIsFocus(true)
+        }}
+      >
+        <label htmlFor='' className={styles.input_label}>
+          {label}
+        </label>
+        <input
+          ref={inputRef}
+          className={styles.input}
+          onBlur={() => !props.value && setIsFocus(false)}
+          {...props}
+        />
+      </div>
       {isError && helperText && <div className={styles.helper_test}>{helperText}</div>}
-    </div>
+    </>
   )
 }
