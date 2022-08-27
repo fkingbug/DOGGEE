@@ -1,8 +1,12 @@
 .button {
-  background: #f5c678;
+  height: 48px;
+  width: 100%;
+  background: var(--primary);
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
-  padding: 15.5px 102.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   color: #ffffff;
   cursor: pointer;
@@ -11,11 +15,11 @@
   font-style: normal;
 }
 .button:hover {
-  background: #f5c678;
+  background: var(--primary);
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
 }
 .button:active {
-  background: rgba(245, 198, 120, 0.7);
+  background: var(--primary7);
 }
 /* animation */
 .dot-flashing {

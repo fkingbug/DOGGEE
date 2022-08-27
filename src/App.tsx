@@ -4,7 +4,6 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
 
 import './App.css'
-import './static/css/fonts.css'
 
 const AuthRoutes = () => (
   <Routes>

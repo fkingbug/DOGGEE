@@ -21,7 +21,8 @@
 }
 
 .container {
-  height: 500px;
+  height: 600px;
+  width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,15 +33,16 @@
 }
 
 .form_container {
-  padding: 0 100px;
+  width: 100%;
+  padding: 0 125px;
 }
 .input_container {
   margin-bottom: 15px;
 }
 .sing_up_container {
   font-weight: 600;
-  font-size: 12px;
-  color: #f5c678;
+  font-size: 14px;
+  color: var(--primary);
   align-items: center;
   margin-bottom: 15px;
   cursor: pointer;

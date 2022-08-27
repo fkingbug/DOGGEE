@@ -5,6 +5,7 @@ import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
+import { useMutation } from '@utils'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -33,11 +34,14 @@ interface FormErrors {
 
 export const LoginPage = () => {
   const navigate = useNavigate()
+
   const [formValues, setFormValues] = React.useState({
     username: '',
     password: '',
     notMyComputer: false,
   })
+  const { isLoading, mutation } = useMutation('http://localhost:3000/auth', 'post', formValues)
+
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
     username: null,
     password: null,
@@ -46,9 +50,16 @@ export const LoginPage = () => {
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.container_header}>DOGGEE</div>
-        <div className={styles.form_container}>
+        <form
+          className={styles.form_container}
+          onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+            const response = await mutation()
+          }}
+        >
           <div className={styles.input_container}>
             <Input
+              disabled={isLoading}
               isError={!!formErrors.username}
               // helperText={formErrors.username}
               value={formValues.username}
@@ -68,6 +79,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input_container}>
             <Passwordinput
+              disabled={isLoading}
               isError={!!formErrors.password}
               value={formValues.password}
               label='password'
@@ -85,6 +97,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input_container}>
             <CheckBox
+              disabled={isLoading}
               label='This is not my device'
               checked={formValues.notMyComputer}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,9 +107,11 @@ export const LoginPage = () => {
             />
           </div>
           <div>
-            <Button>Sign in</Button>
+            <Button isLoading={isLoading} type='submit'>
+              Sign in
+            </Button>
           </div>
-        </div>
+        </form>
         <div className={styles.sing_up_container} onClick={() => navigate('/registration')}>
           Create new account
         </div>
