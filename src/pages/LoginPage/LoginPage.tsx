@@ -32,6 +32,21 @@ interface FormErrors {
   password: string | null
 }
 
+interface ApiSuccesResponse<T> {
+  data: T
+  succes: true
+}
+
+interface ApiFailureResponse {
+  data: { message: string }
+  succes: false
+}
+type ApiResponse<T> = ApiSuccesResponse<T> & ApiFailureResponse
+interface User {
+  username: string
+  password: string
+  id: string
+}
 export const LoginPage = () => {
   const navigate = useNavigate()
 
@@ -40,7 +55,10 @@ export const LoginPage = () => {
     password: '',
     notMyComputer: false,
   })
-  const { isLoading, mutation } = useMutation('http://localhost:3000/auth', 'post', formValues)
+  const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
+    'http://localhost:3001/auth',
+    'post'
+  )
 
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
     username: null,
@@ -54,12 +72,12 @@ export const LoginPage = () => {
           className={styles.form_container}
           onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
-            const response = await mutation()
+            const response = await authMutation(formValues)
           }}
         >
           <div className={styles.input_container}>
             <Input
-              disabled={isLoading}
+              disabled={authLoading}
               isError={!!formErrors.username}
               // helperText={formErrors.username}
               value={formValues.username}
@@ -79,7 +97,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input_container}>
             <Passwordinput
-              disabled={isLoading}
+              disabled={authLoading}
               isError={!!formErrors.password}
               value={formValues.password}
               label='password'
@@ -97,7 +115,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input_container}>
             <CheckBox
-              disabled={isLoading}
+              disabled={authLoading}
               label='This is not my device'
               checked={formValues.notMyComputer}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +125,7 @@ export const LoginPage = () => {
             />
           </div>
           <div>
-            <Button isLoading={isLoading} type='submit'>
+            <Button isLoading={authLoading} type='submit'>
               Sign in
             </Button>
           </div>
