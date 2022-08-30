@@ -1,8 +1,8 @@
 .button {
   height: 48px;
   width: 100%;
-  background: var(--primary);
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  background: var(--color-accent);
+  box-shadow: var(--shadow-button);
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -13,13 +13,14 @@
   font-size: 14px;
   font-weight: 300px;
   font-style: normal;
+  transition: var(--transition);
 }
 .button:hover {
-  background: var(--primary);
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  background: var(--color-accent);
+  box-shadow: var(--shadow-button-hover);
 }
 .button:active {
-  background: var(--primary7);
+  background: var(--color-accent7);
 }
 /* animation */
 .dot-flashing {

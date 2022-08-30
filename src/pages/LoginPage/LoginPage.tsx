@@ -55,8 +55,8 @@ export const LoginPage = () => {
     password: '',
     notMyComputer: false,
   })
-  const { data } = useQuery('http://localhost:3001/users', [formValues.username])
-  const { query } = useQueryLazy<User>('http://localhost:3001/users')
+  const { data, isLoading } = useQuery('http://localhost:3001/users', [formValues.username])
+  console.log('users', isLoading, data)
   const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
     'http://localhost:3001/auth',
     'post'
@@ -75,8 +75,8 @@ export const LoginPage = () => {
           className={styles.form_container}
           onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
-            // const response = await authMutation(formValues)
-            const response = await query()
+            const response = await authMutation(formValues)
+            // const response = await data()
           }}
         >
           <div className={styles.input_container}>

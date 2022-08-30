@@ -42,7 +42,7 @@
 .sing_up_container {
   font-weight: 600;
   font-size: 14px;
-  color: var(--primary);
+  color: var(--color-accent);
   align-items: center;
   margin-bottom: 15px;
   cursor: pointer;
