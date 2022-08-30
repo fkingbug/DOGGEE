@@ -5,7 +5,7 @@ import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
-import { useMutation } from '@utils'
+import { useMutation, useQuery, useQueryLazy } from '@utils'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -55,6 +55,8 @@ export const LoginPage = () => {
     password: '',
     notMyComputer: false,
   })
+  const { data } = useQuery('http://localhost:3001/users', [formValues.username])
+  const { query } = useQueryLazy<User>('http://localhost:3001/users')
   const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
     'http://localhost:3001/auth',
     'post'
@@ -64,6 +66,7 @@ export const LoginPage = () => {
     username: null,
     password: null,
   })
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -72,7 +75,8 @@ export const LoginPage = () => {
           className={styles.form_container}
           onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
-            const response = await authMutation(formValues)
+            // const response = await authMutation(formValues)
+            const response = await query()
           }}
         >
           <div className={styles.input_container}>

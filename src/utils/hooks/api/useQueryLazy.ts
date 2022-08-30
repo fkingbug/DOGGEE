@@ -1,19 +1,14 @@
 import React from 'react'
 
-export const useQuery = <K>(
-  url: string,
-  deps: React.DependencyList = [],
-  config?: Omit<RequestInit, 'method'>
-) => {
+export const useQueryLazy = <K>(url: string, config?: Omit<RequestInit, 'method'>) => {
   const [status, setStatus] = React.useState(0)
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState('')
-  const [data, setData] = React.useState<K | null>(null)
 
-  React.useEffect(() => {
+  const query = React.useCallback(async (): Promise<ApiResponse<K>> => {
     setIsLoading(true)
     try {
-      fetch(url, {
+      const response = await fetch(url, {
         method: 'GET',
         credentials: 'same-origin',
         ...config,
@@ -21,18 +16,17 @@ export const useQuery = <K>(
           'Content-Type': 'application/json',
           ...(!!config?.headers && config.headers),
         },
-      }).then(async response => {
-        const responseData = (await response.json()) as K
-        setStatus(response.status)
-        setData(responseData)
       })
+      setStatus(response.status)
+      return await response.json()
     } catch (error) {
       setIsLoading(false)
       setError((error as Error).message)
+      return { succes: false, data: { message: (error as Error).message } }
     } finally {
       setIsLoading(false)
     }
-  }, deps)
+  }, [])
 
-  return { data, error, isLoading, status }
+  return { query, error, isLoading, status }
 }

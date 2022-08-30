@@ -25,7 +25,7 @@ export const useMutation = <T, K>(
         ...(!!body && { body: JSON.stringify(body) }),
       })
       setStatus(response.status)
-      return (await response.json()) as Promise<ApiResponse<K>>
+      return await response.json()
     } catch (error) {
       setIsLoading(false)
       setError((error as Error).message)
