@@ -1,10 +1,10 @@
-interface ApiSuccesResponse<T> {
+interface ApiSuccessResponse<T> {
   data: T
-  succes: true
+  success: true
 }
 
 interface ApiFailureResponse {
   data: { message: string }
-  succes: false
+  success: false
 }
-type ApiResponse<T> = ApiSuccesResponse<T> | ApiFailureResponse
+type ApiResponse<T> = ApiSuccessResponse<T> | ApiFailureResponse

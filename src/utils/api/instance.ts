@@ -1,5 +1,5 @@
 type BaseUrl = string
-const baseUrl: BaseUrl = 'http://localhost:3000/auth'
+const baseUrl: BaseUrl = 'http://localhost:3001/'
 
 export class API {
   readonly baseUrl: BaseUrl
@@ -7,30 +7,23 @@ export class API {
   constructor(baseUrl: BaseUrl) {
     this.baseUrl = baseUrl
   }
-  getDefaultOptions() {
-    return {
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  }
 
   async request<T>(endpoint: string, options: RequestInit = {}) {
-    const defaultOptions = this.getDefaultOptions()
     const response = await fetch(this.baseUrl + endpoint, {
-      ...defaultOptions,
+      method: 'GET',
+      mode: 'no-cors',
+      credentials: 'include',
       ...options,
       headers: {
-        ...defaultOptions.headers
+        'Content-Type': 'application/json',
         ...(!!options?.headers && options.headers),
       },
     })
 
     if (!response.ok) throw new Error(response.statusText)
 
-    const responseData = (await response.json()) as T
-    return responseData
+    const responseData = (await response.json()) as ApiResponse<T>
+    return { data: responseData, status: response.status }
   }
   get<T>(endpoint: string, options: Omit<RequestInit, 'body'> = {}) {
     return this.request<T>(endpoint, { ...options, method: 'GET' })

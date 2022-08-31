@@ -5,7 +5,7 @@ import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
-import { useMutation, useQuery, useQueryLazy } from '@utils'
+import { api, useMutation, useQuery, useQueryLazy } from '@utils'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -26,22 +26,10 @@ const loginFormValidateSchema = {
 const validateLoginForm = (name: keyof typeof loginFormValidateSchema, value: string) => {
   return loginFormValidateSchema[name](value)
 }
-
 interface FormErrors {
   username: string | null
   password: string | null
 }
-
-interface ApiSuccesResponse<T> {
-  data: T
-  succes: true
-}
-
-interface ApiFailureResponse {
-  data: { message: string }
-  succes: false
-}
-type ApiResponse<T> = ApiSuccesResponse<T> & ApiFailureResponse
 interface User {
   username: string
   password: string
@@ -55,11 +43,10 @@ export const LoginPage = () => {
     password: '',
     notMyComputer: false,
   })
-  const { data, isLoading } = useQuery('http://localhost:3001/users', [formValues.username])
-  console.log('users', isLoading, data)
+  // const { data } = useQuery<User[]>(() => api.get('users'))
+  // const { query } = useQueryLazy<User[]>(() => api.get('users'))
   const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
-    'http://localhost:3001/auth',
-    'post'
+    values => api.post('auth', values)
   )
 
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
@@ -76,7 +63,8 @@ export const LoginPage = () => {
           onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
             const response = await authMutation(formValues)
-            // const response = await data()
+            // const response = await query()
+            console.log('query', response)
           }}
         >
           <div className={styles.input_container}>
