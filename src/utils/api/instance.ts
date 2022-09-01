@@ -11,7 +11,6 @@ export class API {
   async request<T>(endpoint: string, options: RequestInit = {}) {
     const response = await fetch(this.baseUrl + endpoint, {
       method: 'GET',
-      mode: 'no-cors',
       credentials: 'include',
       ...options,
       headers: {

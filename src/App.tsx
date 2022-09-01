@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
+import { getCookie } from '@utils'
 
 import './App.css'
 
@@ -19,6 +20,17 @@ const MainRoutes = () => (
 )
 const App = () => {
   const [isAuth, setIsAuth] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    const authCookie = getCookie('doggee-auth-token')
+
+    if (authCookie) setIsAuth(true)
+
+    setIsLoading(false)
+  }, [])
+  if (isLoading) return null
+
   return <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
 }
 
