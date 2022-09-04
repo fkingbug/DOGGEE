@@ -5,7 +5,7 @@ import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
-import { api, useMutation, useQuery, useQueryLazy } from '@utils'
+import { api, setCookies, useMutation, useQuery, useQueryLazy } from '@utils'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -41,7 +41,7 @@ export const LoginPage = () => {
   const [formValues, setFormValues] = React.useState({
     username: '',
     password: '',
-    notMyComputer: false,
+    isNotMyDevice: false,
   })
   // const { data } = useQuery<User[]>(() => api.get('users'))
   // const { query } = useQueryLazy<User[]>(() => api.get('users'))
@@ -63,8 +63,9 @@ export const LoginPage = () => {
           onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
             const response = await authMutation(formValues)
-            // const response = await query()
-            console.log('query', response)
+            if (!!response && formValues.isNotMyDevice) {
+              setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000)
+            }
           }}
         >
           <div className={styles.input_container}>
@@ -109,10 +110,10 @@ export const LoginPage = () => {
             <CheckBox
               disabled={authLoading}
               label='This is not my device'
-              checked={formValues.notMyComputer}
+              checked={formValues.isNotMyDevice}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const notMyComputer = event.target.checked
-                setFormValues({ ...formValues, notMyComputer })
+                const isNotMyDevice = event.target.checked
+                setFormValues({ ...formValues, isNotMyDevice })
               }}
             />
           </div>

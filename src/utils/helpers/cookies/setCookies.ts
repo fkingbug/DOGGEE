@@ -1,9 +1,9 @@
-export const setCookie = (
+export const setCookies = (
   name: string,
   value: string | number | boolean | null,
-  props: any = {}
+  props: $TSFixMe = {}
 ) => {
-  const cookieOptions: any = {}
+  const cookieOptions: $TSFixMe = {}
 
   if (typeof props.expires === 'number' && props.expires) {
     const date = new Date()
@@ -15,8 +15,9 @@ export const setCookie = (
     cookieOptions.expires = props.expires.toUTCString()
   }
 
-  const cookieValue = encodeURIComponent(value)
+  const cookieValue = value ? encodeURIComponent(value) : null
   let updatedCookie = `${name}=${cookieValue}`
+
   Object.keys(cookieOptions).forEach(propName => {
     updatedCookie += `; ${propName}`
 
@@ -28,4 +29,25 @@ export const setCookie = (
   })
 
   document.cookie = updatedCookie
+  // for (const propName in props) {
+  //   if (propName) {
+  //     updatedCookie += `; ${propName}`
+  //     const propValue = props[propName]
+  //     if (propValue !== true) {
+  //       updatedCookie += '=' + propValue
+  //     }
+  //   }
+  // }
+
+  // Object.keys(cookieOptions).forEach(propName => {
+  //   updatedCookie += `; ${propName}`
+
+  //   const propValue = cookieOptions[propName]
+
+  //   if (propValue !== true) {
+  //     updatedCookie += `=${propValue}`
+  //   }
+  // })
+
+  // document.cookie = updatedCookie
 }

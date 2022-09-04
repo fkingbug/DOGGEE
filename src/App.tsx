@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
-import { getCookie } from '@utils'
+import { deleteCookies, getCookies } from '@utils'
 
 import './App.css'
 
@@ -23,9 +23,17 @@ const App = () => {
   const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
-    const authCookie = getCookie('doggee-auth-token')
+    const authCookie = getCookies('doggee-auth-token')
+    const isNotMyDevice = getCookies('doggee-isNotMyDevice')
 
-    if (authCookie) setIsAuth(true)
+    const deviceExpire = isNotMyDevice && new Date().getTime() > new Date(+isNotMyDevice).getTime()
+    if (authCookie && deviceExpire) {
+      deleteCookies('doggee-auth-token')
+      deleteCookies('doggee-isNotMyDevice')
+    }
+    if (authCookie && !deviceExpire) {
+      setIsAuth(true)
+    }
 
     setIsLoading(false)
   }, [])
