@@ -6,6 +6,7 @@ import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
 import { api, setCookies, useMutation, useQuery, useQueryLazy } from '@utils'
+import { IntlText, useIntl } from '@features'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -37,7 +38,6 @@ interface User {
 }
 export const LoginPage = () => {
   const navigate = useNavigate()
-
   const [formValues, setFormValues] = React.useState({
     username: '',
     password: '',
@@ -118,7 +118,8 @@ export const LoginPage = () => {
           </div>
           <div>
             <Button isLoading={authLoading} type='submit'>
-              Sign in
+              {/* Sign in */}
+              <IntlText path='button.signIn' />
             </Button>
           </div>
         </form>

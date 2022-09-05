@@ -4,7 +4,10 @@
     "paths": {
       "@common/*": ["./common/*"],
       "@pages": ["./pages"],
-      "@utils": ["./utils"]
+      "@utils": ["./utils"],
+      "@features": ["./features"],
+      "@utils/helpers": ["./utils/helpers"],
+      "@utils/hooks": ["./utils/hooks"]
     }
   }
 }
