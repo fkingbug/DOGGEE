@@ -27,6 +27,7 @@ const App = () => {
     const isNotMyDevice = getCookies('doggee-isNotMyDevice')
 
     const deviceExpire = isNotMyDevice && new Date().getTime() > new Date(+isNotMyDevice).getTime()
+    console.log('deviceExpire', deviceExpire)
     if (authCookie && deviceExpire) {
       deleteCookies('doggee-auth-token')
       deleteCookies('doggee-isNotMyDevice')

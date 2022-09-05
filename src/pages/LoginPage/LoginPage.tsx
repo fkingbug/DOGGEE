@@ -43,8 +43,7 @@ export const LoginPage = () => {
     password: '',
     isNotMyDevice: false,
   })
-  // const { data } = useQuery<User[]>(() => api.get('users'))
-  // const { query } = useQueryLazy<User[]>(() => api.get('users'))
+
   const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
     values => api.post('auth', values)
   )
