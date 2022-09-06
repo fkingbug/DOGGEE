@@ -38,6 +38,7 @@ interface User {
 }
 export const LoginPage = () => {
   const navigate = useNavigate()
+  const intl = useIntl()
   const [formValues, setFormValues] = React.useState({
     username: '',
     password: '',
@@ -119,7 +120,8 @@ export const LoginPage = () => {
           <div>
             <Button isLoading={authLoading} type='submit'>
               {/* Sign in */}
-              <IntlText path='button.signIn' />
+              <IntlText path='button.signIn' values={{ test: 'azazazaza' }} />
+              {/* {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })} */}
             </Button>
           </div>
         </form>

@@ -1,12 +1,10 @@
 import React from 'react'
 
+import type { TranslateMessage } from '../hooks/useIntl'
 import { useIntl } from '@features'
 
-interface IntlTextProps {
-  path: string
-}
-
-export const IntlText: React.FC<IntlTextProps> = ({ path }) => {
+type IntlTextProps = TranslateMessage
+export const IntlText: React.FC<IntlTextProps> = ({ path, values }) => {
   const intl = useIntl()
-  return <>{intl.messages[path]}</>
+  return <>{intl.translateMessage(path, values)}</>
 }

@@ -41,7 +41,7 @@ const App = () => {
   if (isLoading) return null
 
   return (
-    <IntlProvider locale='ru' messages={{ 'button.signIn': 'Войти' }}>
+    <IntlProvider locale='ru' messages={{ 'button.signIn': 'Войти {test}' }}>
       <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
     </IntlProvider>
   )
