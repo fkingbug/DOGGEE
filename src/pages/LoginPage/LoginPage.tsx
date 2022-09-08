@@ -45,9 +45,10 @@ export const LoginPage = () => {
     isNotMyDevice: false,
   })
 
-  const { isLoading: authLoading, mutation: authMutation } = useMutation<typeof formValues, User>(
-    values => api.post('auth', values)
-  )
+  const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
+    typeof formValues,
+    ApiResponse<User[]>
+  >(values => api.post('auth', values))
 
   const [formErrors, setFormErrors] = React.useState<FormErrors>({
     username: null,
@@ -119,14 +120,16 @@ export const LoginPage = () => {
           </div>
           <div>
             <Button isLoading={authLoading} type='submit'>
-              {/* Sign in */}
               <IntlText path='button.signIn' values={{ test: 'azazazaza' }} />
+              {/* <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
+                {(txt: any) => <h1>{txt}</h1>}
+              </IntlText> */}
               {/* {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })} */}
             </Button>
           </div>
         </form>
         <div className={styles.sing_up_container} onClick={() => navigate('/registration')}>
-          Create new account
+          <IntlText path='page.login.createNewAccount' />
         </div>
       </div>
     </div>

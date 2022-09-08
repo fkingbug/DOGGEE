@@ -1,0 +1,11 @@
+import { AcceptLocales, DEFAULT_LOCALE } from './getLocale'
+
+export const getMessage = async (locale: AcceptLocales) => {
+  try {
+    const messages = await import(`@static/locales/${locale}.json`)
+    return messages
+  } catch (e) {
+    const defaultMessages = await import(`@static/locales/${DEFAULT_LOCALE}.json`)
+    return defaultMessages
+  }
+}

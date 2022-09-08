@@ -1,24 +1,34 @@
 import React from 'react'
 
-export const useMutation = <T, K>(request: (body: T) => Promise<any>) => {
-  const [status, setStatus] = React.useState(0)
+export const useMutation = <T, K>(request: (body: T) => Promise<K>) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState('')
+  const [data, setData] = React.useState<K | null>(null)
 
-  const mutation = React.useCallback(async (body: T): Promise<ApiResponse<K>> => {
+  const mutation = React.useCallback((body: T): void => {
     setIsLoading(true)
     try {
-      return await request(body).then(async response => {
-        setStatus(response.status)
-        return response.data
+      request(body).then(response => {
+        setIsLoading(false)
+        setData(response)
       })
     } catch (error) {
       setIsLoading(false)
       setError((error as Error).message)
-      return { success: false, data: { message: (error as Error).message } }
+    }
+  }, [])
+
+  const mutationAsync = React.useCallback(async (body: T): Promise<K | undefined> => {
+    setIsLoading(true)
+    try {
+      return await request(body)
+    } catch (error) {
+      setIsLoading(false)
+      setError((error as Error).message)
     } finally {
       setIsLoading(false)
     }
   }, [])
-  return { mutation, error, isLoading, status }
+
+  return { mutationAsync, mutation, data, error, isLoading }
 }

@@ -10,6 +10,5 @@ type IntlProviderProps = IntlContextProps
 // }
 
 export const IntlProvider: React.FC<IntlProviderProps> = ({ locale, messages, children }) => {
-  const [intlValues, setIntlValues] = React.useState({ locale, messages })
   return <IntlContext.Provider value={{ locale, messages }}>{children}</IntlContext.Provider>
 }

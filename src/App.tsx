@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
-import { deleteCookies, getCookies } from '@utils'
+import { deleteCookies, getCookies, getLocale, getMessage } from '@utils'
 import { IntlProvider } from '@features'
 
 import './App.css'
@@ -22,6 +22,8 @@ const MainRoutes = () => (
 const App = () => {
   const [isAuth, setIsAuth] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
+  const [messages, setMessages] = React.useState({})
+  const locale = getLocale()
 
   React.useEffect(() => {
     const authCookie = getCookies('doggee-auth-token')
@@ -35,13 +37,20 @@ const App = () => {
     if (authCookie && !deviceExpire) {
       setIsAuth(true)
     }
+    getMessage(locale).then(messages => {
+      setMessages(messages)
+      // setMessages('en-US')
+
+      setIsLoading(false)
+    })
 
     setIsLoading(false)
   }, [])
+
   if (isLoading) return null
 
   return (
-    <IntlProvider locale='ru' messages={{ 'button.signIn': 'Войти {test}' }}>
+    <IntlProvider locale={'locale'} messages={messages}>
       <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
     </IntlProvider>
   )

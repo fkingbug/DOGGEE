@@ -5,6 +5,7 @@
       "@common/*": ["./common/*"],
       "@pages": ["./pages"],
       "@utils": ["./utils"],
+      "@static/*": ["./static/*"],
       "@features": ["./features"],
       "@utils/helpers": ["./utils/helpers"],
       "@utils/hooks": ["./utils/hooks"]
