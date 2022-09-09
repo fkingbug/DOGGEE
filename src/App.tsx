@@ -5,6 +5,7 @@ import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
 import { deleteCookies, getCookies, getLocale, getMessage } from '@utils'
 import { IntlProvider } from '@features'
 
+import './static/css/themes/dark.css'
 import './App.css'
 
 const AuthRoutes = () => (
