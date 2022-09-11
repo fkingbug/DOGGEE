@@ -7,6 +7,7 @@
       "@utils": ["./utils"],
       "@static/*": ["./static/*"],
       "@features": ["./features"],
+      "@features/*": ["./features/*"],
       "@utils/helpers": ["./utils/helpers"],
       "@utils/hooks": ["./utils/hooks"]
     }

@@ -5,8 +5,8 @@ import { Input, Passwordinput, CheckBox } from '@common/fields'
 import { Button } from '@common/buttons'
 
 import styles from './LoginPage.module.css'
-import { api, setCookies, useMutation, useQuery, useQueryLazy } from '@utils'
-import { IntlText, useIntl } from '@features'
+import { api, setCookies, useMutation } from '@utils'
+import { IntlText, useTheme } from '@features'
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required'
@@ -38,7 +38,8 @@ interface User {
 }
 export const LoginPage = () => {
   const navigate = useNavigate()
-  const intl = useIntl()
+  const { theme, setTheme } = useTheme()
+  console.log(theme)
   const [formValues, setFormValues] = React.useState({
     username: '',
     password: '',
@@ -57,6 +58,7 @@ export const LoginPage = () => {
 
   return (
     <div className={styles.page}>
+      <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>change theme</button>
       <div className={styles.container}>
         <div className={styles.container_header}>DOGGEE</div>
         <form

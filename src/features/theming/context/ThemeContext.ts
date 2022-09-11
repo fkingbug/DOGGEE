@@ -1,9 +1,13 @@
 import React from 'react'
 
-type Theme = 'light' | 'dark'
+export type Theme = 'light' | 'dark'
 
-export interface ThemingContextProps {
+export interface ThemeContextProps {
   theme: Theme
+  setTheme: (theme: Theme) => void
 }
 
-export const ThemingContext = React.createContext<ThemingContextProps>({ theme: 'light' })
+export const ThemeContext = React.createContext<ThemeContextProps>({
+  theme: 'light',
+  setTheme: () => {},
+})

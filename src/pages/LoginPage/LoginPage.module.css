@@ -3,13 +3,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--background-color);
 }
 .container_header {
   display: flex;
   justify-content: center;
   align-items: end;
   border-radius: 20px 20px 0 0;
-  background-image: url('../../static/images/dogge_background.svg');
+  background-image: var(--images-auth-header);
   height: 150px;
   width: 100%;
   padding: 16px;
@@ -27,7 +28,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--background-color);
   box-shadow: var(--shadow-container);
   border-radius: 20px;
 }

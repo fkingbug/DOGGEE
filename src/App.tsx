@@ -3,9 +3,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { LoginPage, NotFoundPage, RegistrationPage } from '@pages'
 import { deleteCookies, getCookies, getLocale, getMessage } from '@utils'
-import { IntlProvider } from '@features'
+import { IntlProvider, ThemeProvider } from '@features'
 
-import './static/css/themes/dark.css'
 import './App.css'
 
 const AuthRoutes = () => (
@@ -20,6 +19,9 @@ const MainRoutes = () => (
     <Route path='*' element={<NotFoundPage />} />
   </Routes>
 )
+
+type Theme = 'light' | 'dark'
+
 const App = () => {
   const [isAuth, setIsAuth] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
@@ -50,10 +52,14 @@ const App = () => {
 
   if (isLoading) return null
 
+  const theme = (getCookies('doggee-theme') as Theme) ?? 'light'
+
   return (
-    <IntlProvider locale={'locale'} messages={messages}>
-      <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
-    </IntlProvider>
+    <ThemeProvider theme={theme}>
+      <IntlProvider locale={'locale'} messages={messages}>
+        <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
+      </IntlProvider>
+    </ThemeProvider>
   )
 }
 
