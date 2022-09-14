@@ -24,10 +24,7 @@ const loginFormValidateSchema = {
 };
 const validateLoginForm = (name: keyof typeof loginFormValidateSchema, value: string) =>
   loginFormValidateSchema[name](value);
-interface FormErrors {
-  username: string | null;
-  password: string | null;
-}
+
 interface FormValues {
   username: string;
   password: string;
@@ -41,12 +38,13 @@ interface User {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { values, setFieldValue } = useForm<FormValues>({
+  const { values, errors, setFieldValue } = useForm<FormValues>({
     initialValues: {
       username: '',
       password: '',
       isNotMyDevice: false
-    }
+    },
+    validateSchema: loginFormValidateSchema
   });
   const { theme, setTheme } = useTheme();
   const [formValues, setFormValues] = React.useState({
@@ -59,11 +57,6 @@ export const LoginPage = () => {
     typeof formValues,
     ApiResponse<User[]>
   >((values) => api.post('auth', values));
-
-  const [formErrors, setFormErrors] = React.useState<FormErrors>({
-    username: null,
-    password: null
-  });
 
   return (
     <div className={styles.page}>
@@ -89,9 +82,6 @@ export const LoginPage = () => {
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const username = event.target.value;
                 setFieldValue('username', username);
-                // setFormValues({ ...formValues, username });
-                const error = validateLoginForm('username', username);
-                setFormErrors({ ...formErrors, username: error });
               }}
               {...(!!formErrors.username && {
                 isError: !!formErrors.username,

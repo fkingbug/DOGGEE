@@ -1,15 +1,27 @@
 import React from 'react';
 
-interface UseFormParams<T> {
-  initialValues: T;
+interface UseFormParams<Values> {
+  initialValues: Values;
+  validateSchema?: {
+    [K in keyof Values]?: (value: Pick<Values, K>[K]) => string | null;
+  };
 }
 
-export const useForm = <T>({ initialValues }: UseFormParams<T>) => {
+export const useForm = <Values extends Object>({
+  initialValues,
+  validateSchema
+}: UseFormParams<Values>) => {
   const [values, setValues] = React.useState(initialValues);
-  console.log('custom hook', values);
-  const setFieldValue = (field: keyof T, value: T[keyof T]) => {
+  const [errors, setErrors] = React.useState<{ [K in keyof Values]?: string } | null>(null);
+
+  const setFieldValue = <K extends keyof Values>(
+    field: keyof Values,
+    value: Pick<Values, K>[K]
+  ) => {
     setValues({ ...values, [field]: value });
+    const error = validateLoginForm('username', username);
+    setFormErrors({ ...formErrors, username: error });
   };
 
-  return { values, setFieldValue };
+  return { values, errors, setFieldValue };
 };
