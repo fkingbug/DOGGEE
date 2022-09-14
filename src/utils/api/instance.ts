@@ -1,11 +1,11 @@
-type BaseUrl = string
-const baseUrl: BaseUrl = 'http://localhost:3001/'
+type BaseUrl = string;
+const baseUrl: BaseUrl = 'http://localhost:3001/';
 
 export class API {
-  readonly baseUrl: BaseUrl
+  readonly baseUrl: BaseUrl;
 
   constructor(baseUrl: BaseUrl) {
-    this.baseUrl = baseUrl
+    this.baseUrl = baseUrl;
   }
 
   async request<T>(endpoint: string, options: RequestInit = {}) {
@@ -15,27 +15,29 @@ export class API {
       ...options,
       headers: {
         'Content-Type': 'application/json',
-        ...(!!options?.headers && options.headers),
-      },
-    })
+        ...(!!options?.headers && options.headers)
+      }
+    });
 
-    if (!response.ok) throw new Error(response.statusText)
+    if (!response.ok) throw new Error(response.statusText);
 
-    const responseData = (await response.json()) as ApiResponse<T>
+    const responseData = (await response.json()) as ApiResponse<T>;
     if (responseData.success) {
-      return { data: responseData.data, status: response.status, success: responseData.success }
+      return { data: responseData.data, status: response.status, success: responseData.success };
     }
-    return { data: responseData.data, status: response.status, success: responseData.success }
+    return { data: responseData.data, status: response.status, success: responseData.success };
   }
+
   get<T>(endpoint: string, options: Omit<RequestInit, 'body'> = {}) {
-    return this.request<T>(endpoint, { ...options, method: 'GET' })
+    return this.request<T>(endpoint, { ...options, method: 'GET' });
   }
+
   post<T>(endpoint: string, body: Record<string, any>, options: RequestInit = {}) {
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',
-      ...(!!body && { body: JSON.stringify(body) }),
-    })
+      ...(!!body && { body: JSON.stringify(body) })
+    });
   }
 }
-export const api = new API(baseUrl)
+export const api = new API(baseUrl);

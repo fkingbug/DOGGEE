@@ -1,11 +1,11 @@
-declare type $TSFixMe = any
-
 declare module '*.svg' {
-  const content: any
-  export default content
+  const content: any;
+  export default content;
 }
 
 declare module '*.module.css' {
-  const classes: { [key: string]: string }
-  export default classes
+  const classes: { [key: string]: string };
+  export default classes;
 }
+
+declare type $TSFixMe = any;

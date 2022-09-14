@@ -1,28 +1,24 @@
-import React from 'react'
-import { IntlContext } from '../context'
+import React from 'react';
 
-export interface TranslateMessage {
-  path: string
-  values?: Record<string, string | number | boolean>
-}
+import { IntlContext } from '../context';
 
 export const useIntl = () => {
-  const intl = React.useContext(IntlContext)
+  const intl = React.useContext(IntlContext);
 
   const translateMessage = (
     path: TranslateMessage['path'],
     values?: TranslateMessage['values']
   ) => {
-    if (!intl.messages[path]) return path
-    if (!values) return intl.messages[path]
-    let translate = intl.messages[path]
-    for (const key in values) {
-      if ({}.hasOwnProperty.call(values, key)) {
-        translate = translate.replace(`{${key}}`, String(values[key]))
-      }
-    }
-    return translate
-  }
+    if (!intl.messages[path]) return path;
+    if (!values) return intl.messages[path];
 
-  return { locale: intl.locale, translateMessage }
-}
+    let translate = intl.messages[path];
+    Object.keys(values).forEach((key) => {
+      translate = translate.replace(`{${key}}`, String(values[key]));
+    });
+
+    return translate;
+  };
+
+  return { locale: intl.locale, translateMessage };
+};

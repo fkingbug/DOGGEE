@@ -1,10 +1,8 @@
-import React from 'react'
-import { InputProps } from '../input'
+import React from 'react';
+import { InputProps } from '../input';
 
-import inputStyles from '../input.module.css'
-import passwordStyles from './PasswordInput.module.css'
-
-const type = 'password'
+import inputStyles from '../input.module.css';
+import passwordStyles from './PasswordInput.module.css';
 
 export const Passwordinput: React.FC<InputProps> = ({
   isError = false,
@@ -12,16 +10,18 @@ export const Passwordinput: React.FC<InputProps> = ({
   label,
   ...props
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null)
-  const [showPassword, setShowPassword] = React.useState(false)
-  const showPasswordToggle = props.value
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const showPasswordToggle = props.value;
 
   return (
     <>
       <div
+        aria-hidden='true'
+        aria-disabled={props.disabled}
         className={`${inputStyles.input_container}  ${isError ? inputStyles.error : ''}`}
         onClick={() => {
-          inputRef.current?.focus()
+          inputRef.current?.focus();
         }}
       >
         <input
@@ -30,11 +30,13 @@ export const Passwordinput: React.FC<InputProps> = ({
           className={inputStyles.input}
           {...props}
         />
-        <label htmlFor='' className={inputStyles.input_label}>
+        <label htmlFor={props.id} className={inputStyles.input_label}>
           {label}
         </label>
         {showPasswordToggle && (
           <div
+            aria-hidden='true'
+            role='button'
             className={passwordStyles.password_toggle_container}
             onClick={() => setShowPassword(!showPassword)}
           >
@@ -93,8 +95,8 @@ export const Passwordinput: React.FC<InputProps> = ({
       </div>
       {isError && helperText && <div className={inputStyles.helper_test}>{helperText}</div>}
     </>
-  )
-}
+  );
+};
 // export const Passwordinput: React.FC<InputProps> = ({ isError = false, helperText, ...props }) => {
 //   const [showPassword, setShowPassword] = React.useState(false)
 //   const showPasswordToggle = props.value

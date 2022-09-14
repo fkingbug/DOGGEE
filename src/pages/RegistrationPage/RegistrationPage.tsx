@@ -1,5 +1,3 @@
-import React from 'react'
+import React from 'react';
 
-export const RegistrationPage = () => {
-  return <div>RegistrationPage</div>
-}
+export const RegistrationPage = () => <div>RegistrationPage</div>;

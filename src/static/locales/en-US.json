@@ -1,4 +1,4 @@
 {
-  "page.login.createNewAccount": "Create new account",
+  "page.login.createNewAccount": "Create new <test>123</test> <ba>123</ba> account",
   "button.signIn": "Sign in"
 }
