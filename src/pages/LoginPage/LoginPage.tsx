@@ -38,25 +38,24 @@ interface User {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { values, errors, setFieldValue } = useForm<FormValues>({
+  const { values, errors, setFieldValue, handleSubmit } = useForm<FormValues>({
     initialValues: {
       username: '',
       password: '',
       isNotMyDevice: false
     },
-    validateSchema: loginFormValidateSchema
+    validateSchema: loginFormValidateSchema,
+    validateOnChange: false,
+    onSubmit: (values) => {
+      console.log('values', values);
+    }
   });
   const { theme, setTheme } = useTheme();
-  const [formValues, setFormValues] = React.useState({
-    username: '',
-    password: '',
-    isNotMyDevice: false
-  });
 
-  const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
-    typeof formValues,
-    ApiResponse<User[]>
-  >((values) => api.post('auth', values));
+  // const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
+  //   typeof formValues,
+  //   ApiResponse<User[]>
+  // >((values) => api.post('auth', values));
 
   return (
     <div className={styles.page}>
@@ -65,17 +64,18 @@ export const LoginPage = () => {
         <div className={styles.container_header}>DOGGEE</div>
         <form
           className={styles.form_container}
-          onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const response = await authMutation(formValues);
-            if (!!response && formValues.isNotMyDevice) {
-              setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
-            }
-          }}
+          onSubmit={handleSubmit}
+          // onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+          //   event.preventDefault();
+          //   const response = await authMutation(formValues);
+          //   if (!!response && formValues.isNotMyDevice) {
+          //     setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
+          //   }
+          // }}
         >
           <div className={styles.input_container}>
             <Input
-              disabled={authLoading}
+              // disabled={authLoading}
               value={values.username}
               label='username'
               type='text'
@@ -83,43 +83,43 @@ export const LoginPage = () => {
                 const username = event.target.value;
                 setFieldValue('username', username);
               }}
-              {...(!!formErrors.username && {
-                isError: !!formErrors.username,
-                helperText: formErrors.username
-              })}
+              {...(!!errors &&
+                !!errors.username && {
+                  isError: !!errors.username,
+                  helperText: errors.username
+                })}
             />
           </div>
           <div className={styles.input_container}>
             <Passwordinput
-              disabled={authLoading}
-              isError={!!formErrors.password}
-              value={formValues.password}
+              // disabled={authLoading}
+              value={values.password}
               label='password'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const password = event.target.value;
-                setFormValues({ ...formValues, password });
-                const error = validateLoginForm('password', password);
-                setFormErrors({ ...formErrors, password: error });
+                setFieldValue('password', password);
               }}
-              {...(!!formErrors.password && {
-                isError: !!formErrors.password,
-                helperText: formErrors.password
-              })}
+              {...(!!errors &&
+                !!errors.password && {
+                  isError: !!errors.password,
+                  helperText: errors.password
+                })}
             />
           </div>
           <div className={styles.input_container}>
             <CheckBox
-              disabled={authLoading}
+              // disabled={authLoading}
               label='This is not my device'
-              checked={formValues.isNotMyDevice}
+              checked={values.isNotMyDevice}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const isNotMyDevice = event.target.checked;
-                setFormValues({ ...formValues, isNotMyDevice });
+                setFieldValue('isNotMyDevice', isNotMyDevice);
               }}
             />
           </div>
           <div>
-            <Button isLoading={authLoading} type='submit'>
+            <Button type='submit'>
+              {/* <Button isLoading={authLoading} type='submit'> */}
               <IntlText path='button.signIn' />
               {/* <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
                 {(txt: any) => <h1>{txt}</h1>}

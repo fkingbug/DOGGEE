@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from '../input.module.css';
-
 import { InputProps } from '../input';
+
+import styles from '../input.module.css';
 
 export const Input: React.FC<InputProps> = ({ isError = false, helperText, label, ...props }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
