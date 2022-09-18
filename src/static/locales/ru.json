@@ -1,4 +1,10 @@
 {
-  "page.login.createNewAccount": "Создать новый <test>123</test> <ba>123</ba> аккаунт ",
-  "button.signIn": "Boйти"
+  "field.input.username.label": "Логин",
+  "field.input.password.label": "Пароль",
+  "field.checkbox.isNotMyDevice.label": "Не мой компьютер",
+  "page.login.createNewAccount": "Создать новый аккаунт",
+  "page.registration.fillYourLoginData": "Создать новый аккаунт ",
+  "button.signIn": "Boйти",
+
+  "validation.required": "поле обязательно"
 }

@@ -26,7 +26,8 @@ const App = () => {
   const [isAuth, setIsAuth] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [messages, setMessages] = React.useState({});
-  const locale = getLocale();
+  // const locale = getLocale();
+  const locale = 'en-US';
 
   React.useEffect(() => {
     const authCookie = getCookies('doggee-auth-token');

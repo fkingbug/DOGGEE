@@ -23,9 +23,8 @@ export const useForm = <Values extends Object>({
     setValues({ ...values, [field]: value });
     const validateSchemaForField = !!validateSchema && !!validateSchema[field];
     if (!validateSchemaForField || !validateOnChange) return;
-    // eslint-disable-next-line spaced-comment
-    //@ts-ignore
-    const error = validateSchema[field](value);
+
+    const error = validateSchema[field]!(value);
     setErrors({ ...errors, [field]: error });
   };
   const setFieldError = <K extends keyof Values>(field: K, error: Pick<Values, K>[K]) => {

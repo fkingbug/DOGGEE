@@ -1,0 +1,35 @@
+.page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--background-color);
+}
+.container {
+  display: grid;
+  grid-column-gap: 50px;
+  grid-template-areas: '. form panel';
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0 auto;
+  min-width: 1150px;
+  height: 100%;
+}
+.form_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  grid-area: form;
+}
+.form_title {
+  font-family: 'Baloo';
+  font-size: 20px;
+  margin-bottom: 72.5px;
+  color: var(--color-accent);
+}
+.input_container {
+  margin-bottom: 15px;
+}
+.panel_container {
+  grid-area: panel;
+}

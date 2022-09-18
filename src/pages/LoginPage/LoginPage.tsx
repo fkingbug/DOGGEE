@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/buttons';
 import { CheckBox, Input, Passwordinput } from '@common/fields';
-import { IntlText, useTheme } from '@features';
+import { IntlText, useIntl, useTheme } from '@features';
 import { api } from '@utils/api';
 import { setCookies } from '@utils/helpers';
 import { useForm, useMutation } from '@utils/hooks';
@@ -25,7 +25,7 @@ const loginFormValidateSchema = {
 const validateLoginForm = (name: keyof typeof loginFormValidateSchema, value: string) =>
   loginFormValidateSchema[name](value);
 
-interface FormValues {
+interface LoginFormValues {
   username: string;
   password: string;
   isNotMyDevice: boolean;
@@ -38,7 +38,13 @@ interface User {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { values, errors, setFieldValue, handleSubmit } = useForm<FormValues>({
+  const intl = useIntl();
+  const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
+    LoginFormValues,
+    ApiResponse<User[]>
+  >((values) => api.post('auth', values));
+
+  const { values, errors, setFieldValue, handleSubmit } = useForm<LoginFormValues>({
     initialValues: {
       username: '',
       password: '',
@@ -46,38 +52,28 @@ export const LoginPage = () => {
     },
     validateSchema: loginFormValidateSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log('values', values);
+      const response = await authMutation(values);
+      if (!!response && values.isNotMyDevice) {
+        setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
+      }
+      console.log('response', response);
     }
   });
   const { theme, setTheme } = useTheme();
-
-  // const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
-  //   typeof formValues,
-  //   ApiResponse<User[]>
-  // >((values) => api.post('auth', values));
 
   return (
     <div className={styles.page}>
       <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>change theme</button>
       <div className={styles.container}>
         <div className={styles.container_header}>DOGGEE</div>
-        <form
-          className={styles.form_container}
-          onSubmit={handleSubmit}
-          // onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
-          //   event.preventDefault();
-          //   const response = await authMutation(formValues);
-          //   if (!!response && formValues.isNotMyDevice) {
-          //     setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
-          //   }
-          // }}
-        >
+        <form className={styles.form_container} onSubmit={handleSubmit}>
           <div className={styles.input_container}>
             <Input
               // disabled={authLoading}
               value={values.username}
-              label='username'
+              label={intl.translateMessage('field.input.username.label')}
               type='text'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const username = event.target.value;
@@ -94,7 +90,7 @@ export const LoginPage = () => {
             <Passwordinput
               // disabled={authLoading}
               value={values.password}
-              label='password'
+              label={intl.translateMessage('field.input.password.label')}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const password = event.target.value;
                 setFieldValue('password', password);
@@ -148,3 +144,15 @@ export const LoginPage = () => {
 
 /*  {...(!!formErrors.username && {isError: !!formErrors.username, helperText: formErrors.username,})} */
 // тс не ругается так как приходит если есть ошибка (вроде так)
+
+// <form
+// className={styles.form_container}
+// onSubmit={handleSubmit}
+// // onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+// //   event.preventDefault();
+// //   const response = await authMutation(formValues);
+// //   if (!!response && formValues.isNotMyDevice) {
+// //     setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
+// //   }
+// // }}
+// >
