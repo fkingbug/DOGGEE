@@ -9,6 +9,7 @@ import { setCookies } from '@utils/helpers';
 import { useForm, useMutation } from '@utils/hooks';
 
 import styles from './LoginPage.module.css';
+import { ROUTES } from '@utils/constants';
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required';
@@ -114,12 +115,7 @@ export const LoginPage = () => {
             />
           </div>
           <Button type='submit'>
-            {/* <Button isLoading={authLoading} type='submit'> */}
             <IntlText path='button.signIn' />
-            {/* <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
-                {(txt: any) => <h1>{txt}</h1>}
-              </IntlText> */}
-            {/* {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })} */}
           </Button>
         </form>
         <div
@@ -127,13 +123,9 @@ export const LoginPage = () => {
           tabIndex={0}
           aria-hidden='true'
           className={styles.sing_up_container}
-          onClick={() => navigate('/registration')}
+          onClick={() => navigate(ROUTES.REGISTRATION)}
         >
-          <IntlText
-            values={{ test: (text: string) => <b>{text}</b> }}
-            path='page.login.createNewAccount'
-          />
-          {/* <IntlText path='page.login.createNewAccount' /> */}
+          <IntlText path='page.login.createNewAccount' />
         </div>
       </div>
     </div>
@@ -154,3 +146,17 @@ export const LoginPage = () => {
 // //   }
 // // }}
 // >
+
+// <Button type='submit'>
+// <Button isLoading={authLoading} type='submit'>
+// <IntlText path='button.signIn' />
+// <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
+//    {(txt: any) => <h1>{txt}</h1>}
+//  </IntlText>
+// {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })}
+// </Button>
+
+/* <IntlText
+values={{ test: (text: string) => <b>{text}</b> }}
+path='page.login.createNewAccount'
+/> */

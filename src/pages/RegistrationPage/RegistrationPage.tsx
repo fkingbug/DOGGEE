@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@common/buttons';
 import { Input, Passwordinput } from '@common/fields';
 import { IntlText, useIntl } from '@features';
+import { ROUTES } from '@utils/constants';
 import { useForm } from '@utils/hooks';
 
 import styles from './RegistrationPage.module.css';
@@ -14,6 +15,40 @@ interface RegistrationFormValues {
   passwordAgain: string;
 }
 
+interface PasswordRulesProps {
+  password: string;
+  passwordAgain: string;
+}
+
+export const PasswordRules: React.FC<PasswordRulesProps> = ({ password, passwordAgain }) => {
+  const [rules, setRules] = React.useState({
+    containNumbers: true,
+    containUppercase: true,
+    containLowercase: true,
+    contain8Characters: true
+  });
+  console.log(password, passwordAgain, rules);
+  return (
+    <div className={styles.panel_data}>
+      <div>Password must :</div>
+      <div>
+        contain <span className={styles.password_correct_rule}>numbers</span>
+      </div>
+      <div>
+        contain <span className={styles.password_uncorrect_rule}>uppercase</span> letter
+      </div>
+      <div>
+        contain <span className={styles.password_correct_rule}>lowercase</span> letter
+      </div>
+      <div>
+        contain at least <span className={styles.password_correct_rule}>8</span> characters
+      </div>
+      <div>
+        Password must <span className={styles.password_correct_rule}>match</span>
+      </div>
+    </div>
+  );
+};
 export const RegistrationPage: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -99,18 +134,18 @@ export const RegistrationPage: React.FC = () => {
         </div>
         <div className={styles.panel_container}>
           <div className={styles.panel_header}>DOGGEE</div>
-          <div>password rules</div>
+          <PasswordRules password={values.password} passwordAgain={values.passwordAgain} />
           <div>
             <div
               role='link'
               tabIndex={0}
               aria-hidden='true'
               className={styles.panel_have_account}
-              onClick={() => navigate(ROUTES.REGISTRATION)}
+              onClick={() => navigate(ROUTES.AUTH)}
             >
               <IntlText
                 values={{ test: (text: string) => <b>{text}</b> }}
-                path='page.login.createNewAccount'
+                path='page.registration.iAlreadyHaveAnAccount'
               />
             </div>
           </div>

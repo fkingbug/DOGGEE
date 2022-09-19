@@ -8,6 +8,7 @@
 
   "page.login.createNewAccount": "Create new account",
   "page.registration.fillYourLoginData": "Fill your login data",
+  "page.registration.iAlreadyHaveAnAccount": "I already have an account",
 
   "validation.required": "field required"
 }

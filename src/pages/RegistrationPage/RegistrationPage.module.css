@@ -64,3 +64,20 @@
   margin-bottom: 30px;
   cursor: pointer;
 }
+.panel_data {
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--color-text);
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.password_correct_rule {
+  font-weight: 600;
+  color: var(--color-additional);
+}
+.password_uncorrect_rule {
+  font-weight: 600;
+  color: var(--color-accent);
+}
