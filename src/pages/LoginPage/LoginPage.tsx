@@ -5,11 +5,11 @@ import { Button } from '@common/buttons';
 import { CheckBox, Input, Passwordinput } from '@common/fields';
 import { IntlText, useIntl, useTheme } from '@features';
 import { api } from '@utils/api';
+import { ROUTES } from '@utils/constants';
 import { setCookies } from '@utils/helpers';
 import { useForm, useMutation } from '@utils/hooks';
 
 import styles from './LoginPage.module.css';
-import { ROUTES } from '@utils/constants';
 
 const validateIsEmpty = (value: string) => {
   if (!value) return 'field required';
@@ -52,14 +52,12 @@ export const LoginPage = () => {
       isNotMyDevice: false
     },
     validateSchema: loginFormValidateSchema,
-    validateOnChange: false,
+    validateOnChange: true,
     onSubmit: async (values) => {
-      console.log('values', values);
       const response = await authMutation(values);
       if (!!response && values.isNotMyDevice) {
         setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
       }
-      console.log('response', response);
     }
   });
   const { theme, setTheme } = useTheme();

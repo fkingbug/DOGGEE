@@ -9,6 +9,11 @@
   "page.login.createNewAccount": "Create new account",
   "page.registration.fillYourLoginData": "Fill your login data",
   "page.registration.iAlreadyHaveAnAccount": "I already have an account",
+  "page.registration.passwordRules.containNumbers": "contain <rule>number</rule> ",
+  "page.registration.passwordRules.containUppercase": "contain <rule>uppercase</rule> letter",
+  "page.registration.passwordRules.containLowerCase": "contain <rule>lower</rule> letter",
+  "page.registration.passwordRules.contain8Cgaracter": "contain at least <rule>8</rule> characters",
+  "page.registration.passwordRules.mustMatch": "Password must <rule>match</rule>",
 
   "validation.required": "field required"
 }

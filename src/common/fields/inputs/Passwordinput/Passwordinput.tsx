@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { InputProps } from '../input';
 
 import inputStyles from '../input.module.css';
@@ -13,13 +14,12 @@ export const Passwordinput: React.FC<InputProps> = ({
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = React.useState(false);
   const showPasswordToggle = props.value;
-
   return (
     <>
       <div
         aria-hidden='true'
         aria-disabled={props.disabled}
-        className={`${inputStyles.input_container}  ${isError ? inputStyles.error : ''}`}
+        className={`${inputStyles.input_container}  ${isError ? inputStyles.input_error : ''}`}
         onClick={() => {
           inputRef.current?.focus();
         }}

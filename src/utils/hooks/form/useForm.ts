@@ -36,7 +36,6 @@ export const useForm = <Values extends Object>({
     setIsSubmiting(true);
     return onSubmit && onSubmit(values);
   };
-
   return {
     values,
     errors,

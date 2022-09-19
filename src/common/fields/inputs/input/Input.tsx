@@ -11,7 +11,7 @@ export const Input: React.FC<InputProps> = ({ isError = false, helperText, label
       <div
         aria-hidden='true'
         aria-disabled={props.disabled}
-        className={`${styles.input_container}  ${isError ? styles.error : ''}`}
+        className={`${styles.input_container}  ${isError ? styles.input_error : ''}`}
         onClick={() => {
           inputRef.current?.focus();
         }}
