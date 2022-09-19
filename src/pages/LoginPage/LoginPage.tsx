@@ -113,16 +113,14 @@ export const LoginPage = () => {
               }}
             />
           </div>
-          <div>
-            <Button type='submit'>
-              {/* <Button isLoading={authLoading} type='submit'> */}
-              <IntlText path='button.signIn' />
-              {/* <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
+          <Button type='submit'>
+            {/* <Button isLoading={authLoading} type='submit'> */}
+            <IntlText path='button.signIn' />
+            {/* <IntlText path='button.signIn' values={{ test: 'azazazaza' }}>
                 {(txt: any) => <h1>{txt}</h1>}
               </IntlText> */}
-              {/* {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })} */}
-            </Button>
-          </div>
+            {/* {intl.translateMessage('button.signIn', { test: 'bla bla bla bla' })} */}
+          </Button>
         </form>
         <div
           role='link'

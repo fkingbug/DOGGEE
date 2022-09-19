@@ -16,6 +16,14 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/*", "**/**/*.d.ts", "/**/*.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "src/*",
+    "**/**/*.d.ts",
+    "/**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/src/**/*.ts",
+    "**/test/**/*.ts"
+  ],
   "extends": "./tsconfig.paths.json"
 }

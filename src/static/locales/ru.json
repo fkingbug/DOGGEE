@@ -1,10 +1,13 @@
 {
   "field.input.username.label": "Логин",
   "field.input.password.label": "Пароль",
+  "field.input.passwordAgain.label": "Повторите пароль",
   "field.checkbox.isNotMyDevice.label": "Не мой компьютер",
+  "button.signIn": "Boйти",
+  "button.done": "Готово",
+
   "page.login.createNewAccount": "Создать новый аккаунт",
   "page.registration.fillYourLoginData": "Создать новый аккаунт ",
-  "button.signIn": "Boйти",
 
   "validation.required": "поле обязательно"
 }

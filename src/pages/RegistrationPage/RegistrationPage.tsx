@@ -1,5 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { Button } from '@common/buttons';
 import { Input, Passwordinput } from '@common/fields';
 import { IntlText, useIntl } from '@features';
 import { useForm } from '@utils/hooks';
@@ -14,6 +16,7 @@ interface RegistrationFormValues {
 
 export const RegistrationPage: React.FC = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const { values, errors, setFieldValue, handleSubmit } = useForm<RegistrationFormValues>({
     initialValues: {
       username: '',
@@ -76,22 +79,42 @@ export const RegistrationPage: React.FC = () => {
             <div className={styles.input_container}>
               <Passwordinput
                 // disabled={authLoading}
-                value={values.password}
-                label={intl.translateMessage('field.input.password.label')}
+                value={values.passwordAgain}
+                label={intl.translateMessage('field.input.passwordAgain.label')}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  const password = event.target.value;
-                  setFieldValue('password', password);
+                  const passwordAgain = event.target.value;
+                  setFieldValue('passwordAgain', passwordAgain);
                 }}
                 {...(!!errors &&
-                  !!errors.password && {
-                    isError: !!errors.password,
-                    helperText: errors.password
+                  !!errors.passwordAgain && {
+                    isError: !!errors.passwordAgain,
+                    helperText: errors.passwordAgain
                   })}
               />
             </div>
+            <Button type='submit'>
+              <IntlText path='button.done' />
+            </Button>
           </form>
         </div>
-        <div className={styles.panel_container}>123</div>
+        <div className={styles.panel_container}>
+          <div className={styles.panel_header}>DOGGEE</div>
+          <div>password rules</div>
+          <div>
+            <div
+              role='link'
+              tabIndex={0}
+              aria-hidden='true'
+              className={styles.panel_have_account}
+              onClick={() => navigate(ROUTES.REGISTRATION)}
+            >
+              <IntlText
+                values={{ test: (text: string) => <b>{text}</b> }}
+                path='page.login.createNewAccount'
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
