@@ -9,6 +9,8 @@ export const Passwordinput: React.FC<InputProps> = ({
   isError = false,
   helperText,
   label,
+  onChange,
+  mask,
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -28,6 +30,11 @@ export const Passwordinput: React.FC<InputProps> = ({
           type={showPasswordToggle && showPassword ? 'text' : 'password'}
           ref={inputRef}
           className={inputStyles.input}
+          onChange={(e) => {
+            if (!!onChange && !e.target.value) return onChange(e);
+            if (!onChange || (mask && mask.test(e.target.value))) return;
+            onChange(e);
+          }}
           {...props}
         />
         <label htmlFor={props.id} className={inputStyles.input_label}>

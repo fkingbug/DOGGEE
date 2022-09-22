@@ -4,7 +4,14 @@ import { InputProps } from '../input';
 
 import styles from '../input.module.css';
 
-export const Input: React.FC<InputProps> = ({ isError = false, helperText, label, ...props }) => {
+export const Input: React.FC<InputProps> = ({
+  isError = false,
+  helperText,
+  onChange,
+  label,
+  mask,
+  ...props
+}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   return (
     <>
@@ -16,7 +23,16 @@ export const Input: React.FC<InputProps> = ({ isError = false, helperText, label
           inputRef.current?.focus();
         }}
       >
-        <input ref={inputRef} className={styles.input} {...props} />
+        <input
+          ref={inputRef}
+          className={styles.input}
+          onChange={(e) => {
+            if (!!onChange && !e.target.value) return onChange(e);
+            if (!onChange || (mask && mask.test(e.target.value))) return;
+            onChange(e);
+          }}
+          {...props}
+        />
         <label htmlFor={props.id} className={styles.input_label}>
           {label}
         </label>
