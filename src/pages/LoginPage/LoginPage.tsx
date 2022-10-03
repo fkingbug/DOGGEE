@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/buttons';
-import { CheckBox, Input, Passwordinput } from '@common/fields';
+import { CheckBox, Input, PasswordInput } from '@common/fields';
 import { IntlText, useIntl, useTheme } from '@features';
 import { api } from '@utils/api';
 import { ROUTES } from '@utils/constants';
@@ -86,7 +86,7 @@ export const LoginPage = () => {
             />
           </div>
           <div className={styles.input_container}>
-            <Passwordinput
+            <PasswordInput
               // disabled={authLoading}
               value={values.password}
               label={intl.translateMessage('field.input.password.label')}

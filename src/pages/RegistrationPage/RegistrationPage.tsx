@@ -2,10 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/buttons';
-import { Input, Passwordinput } from '@common/fields';
+import { Input, PasswordInput } from '@common/fields';
 import { IntlText, useIntl } from '@features';
+import { api } from '@utils/api';
 import { ROUTES } from '@utils/constants';
-import { useForm } from '@utils/hooks';
+import { useForm, useMutation } from '@utils/hooks';
 
 import { PasswordRules } from './PasswordRules/PasswordRules';
 
@@ -17,23 +18,39 @@ interface RegistrationFormValues {
   passwordAgain: string;
 }
 
+const validateIsEmpty = (value: string) => {
+  if (!value) return 'field required';
+  return null;
+};
+
+const registrationFormValidateSchema = {
+  username: (value: string) => validateIsEmpty(value),
+  password: (value: string) => validateIsEmpty(value)
+};
+
 export const RegistrationPage: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+
+  const { mutationAsync: registrationMutation, isLoading: registrationLoading } = useMutation<
+    Omit<RegistrationFormValues, 'passwordAgain'>,
+    ApiResponse<User[]>
+  >((values) => api.post('registration', values));
+
   const { values, errors, setFieldValue, handleSubmit } = useForm<RegistrationFormValues>({
     initialValues: {
       username: '',
       password: '',
       passwordAgain: ''
     },
-    // validateSchema: loginFormValidateSchema,
-    validateOnChange: false,
+    validateSchema: registrationFormValidateSchema,
+    validateOnChange: true,
     onSubmit: async (values) => {
-      // const response = await authMutation(values);
-      // if (!!response && values.isNotMyDevice) {
-      //   setCookies('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
-      // }
-      // console.log('response', response);
+      const response = await registrationMutation({
+        username: values.username,
+        password: values.password
+      });
+      console.log('response', response);
     }
   });
 
@@ -44,10 +61,10 @@ export const RegistrationPage: React.FC = () => {
           <h1 className={styles.form_title}>
             <IntlText path='page.registration.fillYourLoginData' />
           </h1>
-          <form className={styles.form_container}>
+          <form className={styles.form_container} onSubmit={handleSubmit}>
             <div className={styles.input_container}>
               <Input
-                // disabled={authLoading}
+                disabled={registrationLoading}
                 value={values.username}
                 label={intl.translateMessage('field.input.username.label')}
                 type='text'
@@ -63,8 +80,8 @@ export const RegistrationPage: React.FC = () => {
               />
             </div>
             <div className={styles.input_container}>
-              <Passwordinput
-                // disabled={authLoading}
+              <PasswordInput
+                disabled={registrationLoading}
                 value={values.password}
                 label={intl.translateMessage('field.input.password.label')}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,8 +96,8 @@ export const RegistrationPage: React.FC = () => {
               />
             </div>
             <div className={styles.input_container}>
-              <Passwordinput
-                // disabled={authLoading}
+              <PasswordInput
+                disabled={registrationLoading}
                 value={values.passwordAgain}
                 label={intl.translateMessage('field.input.passwordAgain.label')}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

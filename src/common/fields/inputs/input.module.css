@@ -1,6 +1,8 @@
+.field_container {
+  position: relative;
+}
 .input_container {
   cursor: text;
-  position: relative;
   display: flex;
   background: var(--background-color-field);
   border-radius: 5px;

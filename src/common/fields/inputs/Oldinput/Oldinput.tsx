@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import styles from '../input.module.css'
+import { InputProps } from '../input/Input';
 
-import { InputProps } from '../input'
+import styles from '../input.module.css';
 
 export const Oldinput: React.FC<InputProps> = ({
   isError = false,
@@ -10,20 +10,22 @@ export const Oldinput: React.FC<InputProps> = ({
   label,
   ...props
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null)
-  const [isFocus, setIsFocus] = React.useState<boolean>(!!props.value ?? false)
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [isFocus, setIsFocus] = React.useState<boolean>(!!props.value ?? false);
   return (
     <>
       <div
+        aria-hidden='true'
+        role='button'
         className={`${styles.input_container}  ${isError ? styles.error : ''} ${
           isFocus ? styles.focused : ''
         }`}
         onClick={() => {
-          inputRef.current?.focus()
-          setIsFocus(true)
+          inputRef.current?.focus();
+          setIsFocus(true);
         }}
       >
-        <label htmlFor='' className={styles.input_label}>
+        <label htmlFor={props.id} className={styles.input_label}>
           {label}
         </label>
         <input
@@ -35,5 +37,5 @@ export const Oldinput: React.FC<InputProps> = ({
       </div>
       {isError && helperText && <div className={styles.helper_test}>{helperText}</div>}
     </>
-  )
-}
+  );
+};
