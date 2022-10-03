@@ -23,8 +23,8 @@ const loginFormValidateSchema = {
   username: validateUserName,
   password: validatePassword
 };
-const validateLoginForm = (name: keyof typeof loginFormValidateSchema, value: string) =>
-  loginFormValidateSchema[name](value);
+// const validateLoginForm = (name: keyof typeof loginFormValidateSchema, value: string) =>
+//   loginFormValidateSchema[name](value);
 
 interface LoginFormValues {
   username: string;
@@ -70,7 +70,7 @@ export const LoginPage = () => {
         <form className={styles.form_container} onSubmit={handleSubmit}>
           <div className={styles.input_container}>
             <Input
-              // disabled={authLoading}
+              disabled={authLoading}
               value={values.username}
               label={intl.translateMessage('field.input.username.label')}
               type='text'
@@ -87,7 +87,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input_container}>
             <PasswordInput
-              // disabled={authLoading}
+              disabled={authLoading}
               value={values.password}
               label={intl.translateMessage('field.input.password.label')}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

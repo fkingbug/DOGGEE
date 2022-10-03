@@ -32,6 +32,10 @@ export const RegistrationPage: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
 
+  const [step, setStep] = React.useState<'registration' | 'profile' | 'pets' | 'check'>(
+    'registration'
+  );
+
   const { mutationAsync: registrationMutation, isLoading: registrationLoading } = useMutation<
     Omit<RegistrationFormValues, 'passwordAgain'>,
     ApiResponse<User[]>
@@ -50,6 +54,7 @@ export const RegistrationPage: React.FC = () => {
         username: values.username,
         password: values.password
       });
+      setStep('profile');
       console.log('response', response);
     }
   });
