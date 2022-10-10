@@ -16,7 +16,7 @@ export const createDate = (params?: CreateDatePrarams) => {
   const yearShort = d.toLocaleString(locale, { year: '2-digit' });
   const month = d.toLocaleString(locale, { month: 'long' });
   const monthShort = d.toLocaleString(locale, { month: 'short' });
-  const montNumber = d.getMonth() + 1;
+  const monthNumber = d.getMonth() + 1;
   const monthIndex = d.getMonth();
   const timestamp = d.getTime();
   const week = getWeekNumber(d);
@@ -31,7 +31,7 @@ export const createDate = (params?: CreateDatePrarams) => {
     yearShort,
     month,
     monthShort,
-    montNumber,
+    monthNumber,
     monthIndex,
     timestamp,
     week
