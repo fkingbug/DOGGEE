@@ -13,3 +13,5 @@ export const getMonthNames = (locale: string = 'default') => {
   });
   return monthNames;
 };
+
+// monthNames : ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']

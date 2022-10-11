@@ -11,6 +11,7 @@ import { useForm, useMutation } from '@utils/hooks';
 import { PasswordRules } from './PasswordRules/PasswordRules';
 
 import styles from './RegistrationPage.module.css';
+import { Calendar } from '@common/Calendar/Calendar';
 
 interface RegistrationFormValues {
   username: string;
@@ -55,7 +56,6 @@ export const RegistrationPage: React.FC = () => {
         password: values.password
       });
       setStep('profile');
-      console.log('response', response);
     }
   });
 
@@ -115,6 +115,9 @@ export const RegistrationPage: React.FC = () => {
                     helperText: errors.passwordAgain
                   })}
               />
+            </div>
+            <div className={styles.input_container}>
+              <Calendar />
             </div>
             <Button type='submit'>
               <IntlText path='button.done' />
