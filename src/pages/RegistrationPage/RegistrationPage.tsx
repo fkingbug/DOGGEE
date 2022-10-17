@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/buttons';
+import { Calendar } from '@common/Calendar/Calendar';
 import { Input, PasswordInput } from '@common/fields';
 import { IntlText, useIntl } from '@features';
 import { api } from '@utils/api';
@@ -11,7 +12,6 @@ import { useForm, useMutation } from '@utils/hooks';
 import { PasswordRules } from './PasswordRules/PasswordRules';
 
 import styles from './RegistrationPage.module.css';
-import { Calendar } from '@common/Calendar/Calendar';
 
 interface RegistrationFormValues {
   username: string;
@@ -51,7 +51,7 @@ export const RegistrationPage: React.FC = () => {
     validateSchema: registrationFormValidateSchema,
     validateOnChange: true,
     onSubmit: async (values) => {
-      const response = await registrationMutation({
+      await registrationMutation({
         username: values.username,
         password: values.password
       });

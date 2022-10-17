@@ -1,0 +1,10 @@
+.calendar_container {
+  display: flex;
+}
+.calendar_header_container {
+  box-shadow: var(--shadow-container);
+  background-color: var(--background-color);
+  color: var(--color-text);
+  padding: 10px;
+  width: 200px;
+}

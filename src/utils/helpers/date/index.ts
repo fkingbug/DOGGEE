@@ -1,4 +1,5 @@
 export * from './checkIsLeapYear';
+export * from './checkIsToDay';
 export * from './createDate';
 export * from './createMonth';
 export * from './createYear';
