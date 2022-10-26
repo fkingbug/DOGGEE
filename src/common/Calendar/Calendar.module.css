@@ -1,9 +1,11 @@
 .calendar_container {
+  border-radius: 5px;
   box-shadow: var(--shadow-container);
   width: 200px;
 }
 
 .calendar_header_container {
+  border-radius: 5px 5px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,6 +32,7 @@
 }
 
 .calendar_picker_container {
+  border-radius: 0 0 5px 5px;
   padding: 10px;
   background-color: var(--color-field-focused);
 }
@@ -55,4 +58,33 @@
 .calendar_day_container {
   padding: 5.5px;
   cursor: pointer;
+}
+.calendar_day_container:hover {
+  border-radius: 5px;
+  background-color: var(--color-additional7);
+}
+.calendar_additional_day_container {
+  padding: 5.5px;
+  font-weight: 300;
+  cursor: pointer;
+  color: var(--color-placeholder);
+}
+.calendar_today_day_container {
+  border-radius: 5px;
+  background-color: var(--background-color);
+}
+.calendar_selected_day_container {
+  border-radius: 5px;
+  background-color: var(--color-additional);
+}
+.calendar_monthes_container {
+  font-weight: 400;
+  color: var(--color-text);
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px 5px;
+  font-style: 12px;
+}
+.calendar_month_container {
 }

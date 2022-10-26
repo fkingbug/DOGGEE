@@ -1,3 +1,4 @@
+export * from './checkDateIsEqual';
 export * from './checkIsLeapYear';
 export * from './checkIsToDay';
 export * from './createDate';
