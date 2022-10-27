@@ -125,7 +125,16 @@ export const Calendar = () => {
         {mode === 'monthes' && (
           <div className={styles.calendar_monthes_container}>
             {monthNames.map((monthName) => (
-              <div className={styles.calendar_monthes_container}>{monthName.monthShort}</div>
+              <div
+                aria-hidden
+                onClick={() => {
+                  setSelectedMonthIndex(monthName.monthIndex);
+                  setMode('days');
+                }}
+                className={styles.calendar_month_container}
+              >
+                {monthName.monthShort}
+              </div>
             ))}
           </div>
         )}

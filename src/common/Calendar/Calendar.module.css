@@ -84,7 +84,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 3px 5px;
-  font-style: 12px;
+  font-size: 12px;
 }
 .calendar_month_container {
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+.calendar_month_container:hover {
+  border-radius: 5px;
+  background-color: var(--color-additional);
 }

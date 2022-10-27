@@ -4,6 +4,7 @@ export const getMonthNames = (locale: string = 'default') => {
   const monthNames: {
     month: ReturnType<typeof createDate>['month'];
     monthShort: ReturnType<typeof createDate>['monthShort'];
+    monthIndex: ReturnType<typeof createDate>['monthIndex'];
   }[] = Array.from({ length: 12 });
   const date = new Date();
 
@@ -12,7 +13,7 @@ export const getMonthNames = (locale: string = 'default') => {
       locale,
       date: new Date(date.getFullYear(), date.getMonth() + i, date.getDate())
     });
-    monthNames[monthIndex] = { month, monthShort };
+    monthNames[monthIndex] = { month, monthShort, monthIndex };
   });
   return monthNames;
 };

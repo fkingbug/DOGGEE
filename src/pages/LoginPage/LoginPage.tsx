@@ -11,7 +11,7 @@ import { useForm, useMutation } from '@utils/hooks';
 
 import styles from './LoginPage.module.css';
 
-const validateIsEmpty = (value: string) => {
+export const validateIsEmpty = (value: string) => {
   if (!value) return 'field required';
   return null;
 };
